@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+
+\newtheorem*{lemma}{Lemma}
+
+\title{Constraints selection for the Hamiltonian graph problem}
+\author{Adrián Enríquez Ballester}
+
+\begin{document}
+\maketitle
+
+The set of constraints stated in the assignment description are not minimal.
+Some of them follow from the others, so a subset can be choosen while keeping the
+problem requirements. This document explains the constraints selection and
+proves it to be correct.
+
+The constraints, as specified in the assignment, are:
+
+\begin{enumerate}
+  \item For each $i \in \{1..n\}$, $v_i$ appears in the sequence.
+  \item For each $i \in \{1..n\}$, $v_i$ does not appear in two different
+    positions of the sequence.
+  \item For each $j \in \{1..n\}$, the $j$-th element of the sequence contains
+    a vertex.
+  \item For each $i,j \in \{1..n\}$ such that $i \neq j$, $v_i$ and $v_j$ do
+    not appear in the same position of the sequence.
+  \item For each $i,j \in \{1..n\}$ such that $i \neq j$: if $v_i$ and $v_j$
+    are not adjacent in the graph, then they do not appear together in the sequence.
+\end{enumerate}
+
+Let $p_{i j}$ be the propositional variable meaning that `vertex $i$ is in the
+path position $j$'. The first four constraints can be translated into the following
+propositional formulas:
+
+\begin{enumerate}
+  \item For each $i \in \{1..n\}$, we have $p_{i 1} \lor p_{i 2} \lor ... \lor
+    p_{i n}$.
+  \item For each $i,j \in \{1..n\}$, we have $p_{i j} \Rightarrow \neg p_{i 1}
+    \land \neg p_{i 2} \land ... \land \neg p_{i (j - 1)} \land \neg p_{i (j
+    + 1)} \land ... \land \neg p_{i n}$.
+  \item For each $j \in \{1..n\}$, we have $p_{1 j} \lor p_{2 j} \lor ... \lor
+    p_{n j}$.
+  \item For each $i,j,k \in \{1..n\}$ such that $i \neq j$, we have $\neg (p_{i k}
+    \land p_{j k})$.
+\end{enumerate}
+
+We are going to prove that 2 and 3 are logical consequences of 1 and 4, thus an
+equivalent smaller set of constraints is $\{1,4,5\}$.
+
+\begin{lemma}
+  $\{1,4\} \models 2$ and $\{1,4\} \models 3$.
+\end{lemma}
+
+\begin{proof}
+  Let $n$ be the number of nodes in the graph and let $\alpha$ be an 
+  assignment that satisfies $\{1,4\}$. Let $S = \{ p_{i j} : \alpha(p_{i j}) \}$ 
+  be the set of variables assigned to $true$ by $\alpha$.
+
+  On the one hand, 1 implies that $|S| \geq n$, because at least one $p_{i j}$
+  must be $true$ for each $i \in \{1..n\}$. On the other hand, 4 implies that $|S| \leq n$,
+  because for every pair $p_{i j},p_{k j} \in S$, $i$ must be the same as $k$ in
+  order to not contradict 4, so both elements are the same. This leaves us with
+  the result  $|S| = n$.
+
+  If we suppose $\neg 2$, then there exists a pair $p_{i j}, p_{i k} \in S$
+  with $j \neq k$ and, together with 1, this would fall into the case $|S| > n$, 
+  which is not compatible with 4. As $1 \land 4 \land \neg 2$ is unsatisfiable,
+  we have that $\{1,4\} \models 2$.
+
+  For the last part, if we suppose $\neg 3$, then there exists some $j \in \{1..n\}$ 
+  such that $p_{i j} \notin S$ $\forall i \in \{1..n\}$ and, together with 4,
+  this time it falls into the case where $|S| < n$, which is not compatible with 1. 
+  This ends the proof with the result $\{1,4\} \models 3$.
+\end{proof}
+
+\end{document}
