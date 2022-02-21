@@ -1,7 +1,7 @@
 module Main where
 
-import GraphColoringProblem
-import PropProblemSmtLib
+import           SatExample.GraphColoringProblem
+import           SatExample.PropProblemSmtLib
 
 -- | Example usage, having z3 and ghc installed:
 -- z3 <(runghc graph-coloring-sat.hs)

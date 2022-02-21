@@ -1,9 +1,10 @@
 -- |
--- Module      : PropProblemSmtLib
+-- Module      : SatExample.PropProblemSmtLib
 -- Copyright   : (c) Adrián Enríquez Ballester, 2021
 --
--- Module for defining a propositional problem with some SMT-LIB scripting generation capabilities.
-module PropProblemSmtLib
+-- Module for defining a propositional problem with some
+-- SMT-LIB scripting generation capabilities.
+module SatExample.PropProblemSmtLib
   ( Prop (..),
     (~>),
     PropConstraint,
@@ -13,7 +14,7 @@ module PropProblemSmtLib
   )
 where
 
-import Data.List (intersperse, nub)
+import           Data.List (intersperse, nub)
 
 -- | Propositional Logic model.
 data Prop
@@ -32,22 +33,22 @@ data Prop
 varNames :: Prop -> [String]
 varNames = nub . go
   where
-    go (Var v) = [v]
-    go (Not p) = go p
-    go (And ps) = mconcat . map go $ ps
-    go (Or ps) = mconcat . map go $ ps
+    go (Var v)    = [v]
+    go (Not p)    = go p
+    go (And ps)   = mconcat . map go $ ps
+    go (Or ps)    = mconcat . map go $ ps
     go (If p1 p2) = go p1 <> go p2
 
 -- | A set of constraints with an informative explanation.
 data PropConstraint = PropConstraint
   { explanation :: String,
-    props :: [Prop]
+    props       :: [Prop]
   }
 
 -- | A propositional problem with some metadata (i.e. name and description)
 -- and a set of its explained constraints.
 data PropProblem = PropProblem
-  { name :: String,
+  { name        :: String,
     description :: String,
     constraints :: [PropConstraint]
   }
@@ -89,10 +90,10 @@ getModel = "(get-model)"
 
 -- | Propositional construction in SMT-LIB.
 prop :: Prop -> String
-prop (Var v) = v
-prop (Not p) = "(not " <> prop p <> ")"
-prop (And ps) = "(and " <> unwords (prop <$> ps) <> ")"
-prop (Or ps) = "(or " <> unwords (prop <$> ps) <> ")"
+prop (Var v)    = v
+prop (Not p)    = "(not " <> prop p <> ")"
+prop (And ps)   = "(and " <> unwords (prop <$> ps) <> ")"
+prop (Or ps)    = "(or " <> unwords (prop <$> ps) <> ")"
 prop (If p1 p2) = "(=> " <> prop p1 <> " " <> prop p2 <> ")"
 
 -- | Assert a proposition in SMT-LIB.

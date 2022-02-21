@@ -1,23 +1,23 @@
 -- |
--- Module      : HamiltonianGraphProblem
+-- Module      : SatExample.HamiltonianPathProblem
 -- Copyright   : (c) Adrián Enríquez Ballester, 2021
-module HamiltonianGraphProblem where
+module SatExample.HamiltonianPathProblem where
 
-import Graph
-import PropProblemSmtLib
+import           SatExample.Graph
+import           SatExample.PropProblemSmtLib
 
--- | Hamiltonian graph problem expressed as a propositional logic problem.
-hamiltonianGraphProblem :: Graph -> PropProblem
-hamiltonianGraphProblem graph =
+-- | Hamiltonian path problem expressed as a propositional logic problem.
+hamiltonianPathProblem :: Graph -> PropProblem
+hamiltonianPathProblem graph =
   let n = numNodes graph
       nodeInPosition i j = Var $ "p" <> show i <> "_" <> show j
    in PropProblem
-        { name = "Hamiltonian graph",
+        { name = "Hamiltonian path",
           description =
             unlines
               [ "This script checks if the undirected graph with edges",
                 "\t" <> show graph,
-                "is Hamiltonian (i.e. it has a Hamiltonian path).",
+                "has a Hamiltonian path.",
                 "The propositional variable 'pi_j' means that the node i appears in the path position j,",
                 "where nodes are labeled as natural numbers starting from 0."
               ],

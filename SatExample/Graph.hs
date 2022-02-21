@@ -1,11 +1,11 @@
 -- |
--- Module      : Graph
+-- Module      : SatExample.Graph
 -- Copyright   : (c) Adrián Enríquez Ballester, 2021
 --
 -- This module contains a very simple representation of a graph data structure.
-module Graph where
+module SatExample.Graph where
 
-import Numeric.Natural
+import           Numeric.Natural
 
 -- | A graph represented as a list of edges (i.e. node pairs) where
 -- nodes are natural numbers starting from 0.

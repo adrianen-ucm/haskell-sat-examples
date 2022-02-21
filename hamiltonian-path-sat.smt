@@ -1,7 +1,7 @@
 ; Hamiltonian graph
 ; This script checks if the undirected graph with edges
 ; 	[(0,1),(1,2),(2,3),(3,4),(4,5),(1,3)]
-; is Hamiltonian (i.e. it has a Hamiltonian path).
+; has a Hamiltonian path.
 ; The propositional variable 'pi_j' means that the node i appears in the path position j,
 ; where nodes are labeled as natural numbers starting from 0.
 (declare-const p0_0 Bool)

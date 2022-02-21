@@ -1,10 +1,10 @@
 -- |
--- Module      : GraphColoringProblem
+-- Module      : SatExample.GraphColoringProblem
 -- Copyright   : (c) Adrián Enríquez Ballester, 2021
-module GraphColoringProblem where
+module SatExample.GraphColoringProblem where
 
-import Graph
-import PropProblemSmtLib
+import           SatExample.Graph
+import           SatExample.PropProblemSmtLib
 
 -- | Graph coloring problem expressed as a propositional logic problem.
 graphColoringProblem :: Int -> Graph -> PropProblem
